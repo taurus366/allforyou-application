@@ -10,9 +10,6 @@ import '../app_theme.dart';
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
-  static const int minFirstAndLastNameLength = 3;
-  static const int minPasswordLength = 6;
-
   static const String $firstName = 'first name';
   static const String $lastName = 'last name';
   static const String $email = 'email address';
@@ -81,6 +78,10 @@ class _RegisterPageState extends State<RegisterPage> with TickerProviderStateMix
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return Shared.EMPTY_FIELD;
+                        } else if(value.length < Shared.minFirstAndLastNameLength) {
+                          return Shared.NAME_NOT_ENOUGH_LENGTH;
+                        } else if(!Shared.checkOnlyStringInText(value)) {
+                          return Shared.ONLY_STRING;
                         }
                       },
                       controller: RegisterPage.firstName,
@@ -113,6 +114,10 @@ class _RegisterPageState extends State<RegisterPage> with TickerProviderStateMix
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return Shared.EMPTY_FIELD;
+                        } else if(value.length < Shared.minFirstAndLastNameLength) {
+                          return Shared.NAME_NOT_ENOUGH_LENGTH;
+                        } else if(!Shared.checkOnlyStringInText(value)) {
+                          return Shared.ONLY_STRING;
                         }
                       },
                       controller: RegisterPage.lastName,
@@ -144,6 +149,8 @@ class _RegisterPageState extends State<RegisterPage> with TickerProviderStateMix
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return Shared.EMPTY_FIELD;
+                        } else if (!Shared.checkMailValidity(value)) {
+                          return Shared.EMAIL_ISNT_CORRECT;
                         }
                       },
                       controller: RegisterPage.email,
@@ -176,6 +183,8 @@ class _RegisterPageState extends State<RegisterPage> with TickerProviderStateMix
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return Shared.EMPTY_FIELD;
+                        } else if(value.length < Shared.minPasswordLength) {
+                          return Shared.PASSWORD_LENGTH;
                         }
                       },
                       controller: RegisterPage.password,
@@ -208,6 +217,10 @@ class _RegisterPageState extends State<RegisterPage> with TickerProviderStateMix
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return Shared.EMPTY_FIELD;
+                        } else if(value.length < Shared.minPasswordLength) {
+                          return Shared.PASSWORD_LENGTH;
+                        } else if(value != RegisterPage.password.value.toString()) {
+                          return Shared.PASSWORD_DIDNT_MATCH;
                         }
                       },
                       controller: RegisterPage.rePassword,
